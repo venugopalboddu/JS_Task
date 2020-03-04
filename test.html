@@ -43,6 +43,7 @@
 <script>
 var result;
 var output;
+var id;
 var xhr = new XMLHttpRequest();
 xhr.open("GET", "http://localhost:3000/posts", true);
 xhr.onreadystatechange = function() {
@@ -58,7 +59,7 @@ xhr.onreadystatechange = function() {
     document.getElementById('demo5').innerHTML = JsonData[4].text;
   }
 }
-xhr.send();
+
 ////////////////////////////////////////////////////////////////////
 function add() {
 var para = document.getElementById('para').value;
@@ -69,11 +70,27 @@ if(para == 1) {
   var js1 = [a.slice(0, range), b, a.slice(range)].join(' ');
       document.getElementById("demo1").innerHTML = js1;
      output = js1;
+     id = document.getElementById('para').value;
  }
 }
 function postData() {
-  alert(output);
+  alert(output+ "... " +id);
+
+var c = output;
+var currentId =id;
+//alert(currentId+"..."+c);
+
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function() {
+    var x = document.getElementById("demo1").innerHTML
+     console.log("BH",c)
+  };
+  xhr.open("PUT", "http://localhost:3000/posts/"+ currentId);
+  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhr.send('text='+c, currentId);
+
 }
+xhr.send();
 </script>
 </html>
 
